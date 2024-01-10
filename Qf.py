@@ -16,10 +16,10 @@ class Clay(Qf):
     def calculate_Qf(self):
         control = self.cu / self.sigma
         if control < 1:
-            qf = 0.5 * control ** -0.5
+            alpha = 0.5 * control ** -0.5
         else:
-            qf = 0.5 * control ** -0.25
-        return qf
+            alpha = 0.5 * control ** -0.25
+        return self.cu * alpha
 
 
 class OtherSoils(Qf):
