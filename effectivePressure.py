@@ -2,7 +2,7 @@ import copy
 
 
 class EffectivePressure:
-    def __init__(self, gama, h, max_qf):
+    def __init__(self, gama, h):
         """
         The function initializes the values of gamma and h, creates line data, and generates lines.
 
@@ -13,7 +13,6 @@ class EffectivePressure:
         """
         self.gama = gama
         self.h = h
-        self.max_qf = max_qf
         self.zeroPressure = 0
         lineData = self.line_data_creator()
         self.lines = self.generate_lines(lineData)
@@ -49,13 +48,10 @@ class EffectivePressure:
         line_index = self.find_line(z, self.lines)
         if line_index is not None:
             pressure = self.lines[line_index].calculate_pressure(z)
-            max_qf = self.max_qf[line_index]
+
         else:
             pressure = 0
-            max_qf = 0
-        if not max_qf:
-            max_qf = float('inf')
-        return pressure, max_qf
+        return pressure, line_index
 
 
 class LineEquation:
@@ -67,7 +63,6 @@ class LineEquation:
     def calculate_pressure(self, x):
         return self.slope * (x - self.x_range[0]) + self.y_intercept
 
-
-# effectiveInstance = EffectivePressure([19, 10, 10], [8, 10, 4], [67, 0, 81])
-# p, maxqf = effectiveInstance.output(17)
-# print(p, maxqf)
+# effectiveInstance = EffectivePressure([19, 10, 10], [8, 10, 4])
+# p, lineIndex = effectiveInstance.output(17)
+# print(p, lineIndex)
