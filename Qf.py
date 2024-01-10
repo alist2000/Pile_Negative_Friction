@@ -7,10 +7,11 @@ class Qf:
 
 
 class Clay(Qf):
-    def __init__(self, cu, sigma):
+    def __init__(self, cu, sigma, max_qf):
         super().__init__()
         self.cu = cu
         self.sigma = sigma
+        self.max_qf = max_qf
         self.Qf = self.calculate_Qf()
 
     def calculate_Qf(self):
@@ -19,23 +20,32 @@ class Clay(Qf):
             alpha = 0.5 * control ** -0.5
         else:
             alpha = 0.5 * control ** -0.25
-        return self.cu * alpha
+        qf = self.cu * alpha
+        if qf < self.max_qf:
+            return qf
+        else:
+            return self.max_qf
 
 
 class OtherSoils(Qf):
-    def __init__(self, beta, sigma):
+    def __init__(self, beta, sigma, max_qf):
         super().__init__()
         self.beta = beta
         self.sigma = sigma
+        self.max_qf = max_qf
         self.Qf = self.calculate_Qf()
 
     def calculate_Qf(self):
         qf = self.beta * self.sigma
-        return qf
+        if qf < self.max_qf:
+            return qf
+        else:
+            return self.max_qf
 
 
-# clay = Clay(70, 192)
+
+# clay = Clay(70, 192, 67)
 # print(clay.Qf)
-
-# sand = OtherSoils(0.29, 28.5)
+#
+# sand = OtherSoils(0.37, 252, 81)
 # print(sand.Qf)
