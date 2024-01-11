@@ -1,6 +1,7 @@
 import pandas as pd
 import plotly.graph_objects as go
 import numpy as np
+from Unit import Unit
 
 
 # Function to calculate intersection
@@ -25,8 +26,10 @@ def intersection(depth, curve_a, curve_b):
     return None, None  # Return None if there is no intersection
 
 
-class Plot:
+class Plot(Unit):
     def __init__(self, depth, curve_a, curve_b):
+        super().__init__()  # Call the __init__ method of the parent class
+        print(self.unitSystem)
         self.depth = depth
         self.curve_a = curve_a
         self.curve_b = curve_b
@@ -62,14 +65,26 @@ class Plot:
 
         # Update layout to show the end of the depth on the y-axis
         fig.update_layout(
-            title='Effective negative friction length',
+            title='Effective length of negative skin friction',
             xaxis=dict(title=''),
-            yaxis=dict(title='Pile Length', autorange='reversed'),
+            yaxis=dict(title=f'Pile Length ({self.lengthUnit})', autorange='reversed'),
             showlegend=True,
         )
 
+        fig.add_annotation(
+            xref="paper",
+            yref="paper",
+            x=0,
+            y=1.1,
+            text="L = " + str(depth[-1]) + " " + self.lengthUnit,
+            showarrow=False,
+            font=dict(size=16)
+        )
+        fig.update_xaxes(rangemode="tozero")
+        fig.update_yaxes(rangemode="tozero")
+
         # Show the figure
-        fig.show()
+        # fig.show()
         fig.write_html("plot.html")
         fig.write_image("plot.png")
         self.effective_depth = depth_intersect
