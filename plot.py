@@ -29,7 +29,7 @@ def intersection(depth, curve_a, curve_b):
 class Plot(Unit):
     def __init__(self, depth, curve_a, curve_b):
         super().__init__()  # Call the __init__ method of the parent class
-        print(self.unitSystem)
+        # print(self.unitSystem)
         self.depth = depth
         self.curve_a = curve_a
         self.curve_b = curve_b

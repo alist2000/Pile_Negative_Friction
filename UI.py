@@ -60,6 +60,8 @@ class tabWidget(QWidget, Unit):
         deltaHNum = QDoubleSpinBox()
         deltaHNum.setDecimals(4)
         deltaHNum.setValue(0.1)
+        deltaHNum.setRange(0.1, 1)
+
         hLayout2.addWidget(deltaH)
         hLayout2.addWidget(deltaHNum)
 
@@ -137,7 +139,6 @@ class SoilProperties(QWidget, Unit):
             # convert to spacing based.
             for i in range(1, self.soilLayer.tableWidgetXGrid.rowCount()):
                 old_value = self.soilLayer.tableWidgetXGrid.cellWidget(i, 1).value()
-                print(old_value)
                 new_value = old_value - firstCoord
                 firstCoord = copy.deepcopy(old_value)
                 item = QDoubleSpinBox()
@@ -170,12 +171,10 @@ class SoilProperties(QWidget, Unit):
                 beta_cu.append(betaOrCu)
                 beta_cu_value.append(self.soilLayer.tableWidgetXGrid.cellWidget(i, 3).value())
                 qf_max.append(self.soilLayer.tableWidgetXGrid.cellWidget(i, 4).value())
-        print(gama, h, beta_cu, beta_cu_value, qf_max)
         Qd = self.QdNum.value()
         d_pile = self.diameterNum.value()
         delta = self.deltaHNum.value()
         Qe = self.Qe.value()
-        print(Qe)
         main = MainCalc(gama, h, qf_max, beta_cu, beta_cu_value, d_pile, Qd, Qe, delta)
         plot = Plot(main.h_list, main.rn_qs, main.qs_qd)
         label = QLabel()
@@ -266,7 +265,6 @@ class SoilPropDefine(QWidget, Unit):
             self.tableWidgetXGrid.setCellWidget(0, 1, item)
             self.grid_base = "coordinate"
             firstCoord = 0
-            print("self.tableWidgetXGrid.rowCount()", self.tableWidgetXGrid.rowCount())
             for i in range(1, self.tableWidgetXGrid.rowCount()):
                 old_value = self.tableWidgetXGrid.cellWidget(i, 1).value()
                 new_value = firstCoord + old_value
@@ -289,7 +287,6 @@ class SoilPropDefine(QWidget, Unit):
             firstCoord = 0
             for i in range(1, self.tableWidgetXGrid.rowCount()):
                 old_value = self.tableWidgetXGrid.cellWidget(i, 1).value()
-                print(old_value)
                 new_value = old_value - firstCoord
                 firstCoord = copy.deepcopy(old_value)
                 item = QDoubleSpinBox()

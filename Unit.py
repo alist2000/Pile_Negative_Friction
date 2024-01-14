@@ -12,13 +12,3 @@ class Unit:
             self.pressureUnit = "KPa"
             self.densityUnit = "KN/m3"
             self.forceUnit = "KN"
-
-
-
-class A(Unit):
-    def __init__(self):
-        super().__init__()  # Call the __init__ method of the parent class
-        print(self.lengthUnit)
-
-
-# a_instance = A()
